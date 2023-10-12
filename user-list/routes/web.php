@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $api = Http::get('https://run.mocky.io/v3/ce47ee53-6531-4821-a6f6-71a188eaaee0');
-    $apiArray = $api->json();
-    return view('userList', ['apiArray' => $apiArray]);
 });
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/page/{page}', [UserController::class, 'index'])->where('page', '[0-9]+');
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::delete('/users/destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::put('/users/update/{id}', [UserController::class,'update'])->name('users.update');
